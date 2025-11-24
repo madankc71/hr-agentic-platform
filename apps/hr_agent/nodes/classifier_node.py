@@ -24,7 +24,18 @@ def classifier_agent(state: Dict) -> Dict:
     client = OpenAI()
 
     messages = state.get("messages", [])
-    user_message = messages[-1]["content"] if messages else ""
+    # user_message = messages[-1]["content"] if messages else ""
+    
+    if not messages:
+        user_message = ""
+    else:
+        last = messages[-1]
+        # Handle both dicts and LangChain message objects
+        if isinstance(last, dict):
+            user_message = last.get("content", "")
+        else:
+            user_message = getattr(last, "content", "")
+
 
     system_prompt = f"""
     You are an HR intent classifier.
