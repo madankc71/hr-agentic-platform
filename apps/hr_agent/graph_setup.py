@@ -4,6 +4,7 @@ from .nodes.classifier_node import classifier_agent
 from .nodes.router_node import router_node
 from .nodes.policy_node import policy_node
 from .nodes.leave_node import leave_node
+from .nodes.benefits_node import benefits_node
 
 
 workflow = StateGraph(HRState)
@@ -13,6 +14,7 @@ workflow.add_node("router", router_node)
 workflow.add_node("policy_node", policy_node)
 
 workflow.add_node("leave_node", leave_node)
+workflow.add_node("benefits_node", benefits_node)
 
 
 workflow.add_edge("classifier", "router")
