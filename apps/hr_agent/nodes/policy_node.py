@@ -11,7 +11,17 @@ def policy_node(state: Dict) -> Dict:
     client = OpenAI()
 
     messages = state.get("messages", [])
-    user_message = messages[-1].content if messages else ""
+    # user_message = messages[-1].content if messages else ""
+
+    # Support both dict messages and HumanMessage objects
+    if messages:
+        last_msg = messages[-1]
+        if isinstance(last_msg, dict):
+            user_message = last_msg.get("content", "")
+        else:
+            user_message = last_msg.content
+    else:
+        user_message = ""
 
     system_prompt = """
     You are an HR Policy assistant.
